@@ -39,10 +39,12 @@ module OfficialFM
     def default_headers
       headers = {
         'X-API-Version' => '2.0',
-        'X-API-KEY'     => @api_key,
         :accept         => 'application/json',
         :user_agent     => "officialfm v2 ruby gem version #{OfficialFM::VERSION}"
       }
+      headers['X-API-KEY'] = @api_key if @api_key
+
+      headers
     end
 
     # Provides the URL for accessing the API

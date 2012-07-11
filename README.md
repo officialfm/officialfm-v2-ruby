@@ -141,6 +141,7 @@ Consult the [API docs](http://dev.official.fm) for a description of valid option
 ## Copyright
 
 Copyright (c) 2012 Dimiter Petrov
+
 Copyright (c) 2011 Amos Wenger
 
 This project is distributed under the New BSD License. See LICENSE for details.
