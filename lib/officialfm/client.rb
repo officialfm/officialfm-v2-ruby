@@ -11,20 +11,20 @@ module OfficialFM
 
     def initialize(options={})
       @api_key = options[:api_key] || OfficialFM.api_key
-      connection
+      connection(options)
     end
 
 
     # Faraday::Connection used for all HTTP requests
     #
     # @return [Faraday::Connection]
-    def connection
-      options = {
+    def connection(options={})
+      config = {
         :url     => api_url,
         :headers => default_headers
-      }
+      }.merge(options)
     
-      @connection ||= Faraday.new(options) do |builder|
+      @connection ||= Faraday.new(config) do |builder|
         builder.adapter Faraday.default_adapter
 
         builder.request :url_encoded
