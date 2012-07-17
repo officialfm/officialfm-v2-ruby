@@ -9,8 +9,15 @@ module OfficialFM
 
     # Retrieve information about a specific playlist
     def playlist(id, options={})
-      response = connection.get "/playlists/#{id}", options
-      response.body.playlist
+      response = connection.get("/playlists/#{id}", options).body.playlist
+      extend_response(response, PlaylistMethods)
+    end
+
+    module PlaylistMethods
+      def tracks
+        response = connection.get "#{self.src}/tracks"
+        response.body.tracks
+      end
     end
 
   end

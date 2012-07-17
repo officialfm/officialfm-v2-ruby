@@ -73,6 +73,10 @@ Get info about a specific playlist:
 officialfm.playlist('CbqY')
 ```
 
+Retrieve the tracks in a playlist
+
+officialfm.playlist('CbqY').tracks
+
 Search for a project (a project can be an artist or a collaboration between several artists)
 
 ```ruby
@@ -83,6 +87,14 @@ Similarly to playlists, you can get information about a specific project with
 
 ```ruby
 officialfm.project('edB6')
+```
+
+Get a project's tracks or playlists:
+
+```ruby
+artist = officialfm.project('edB6')
+puts artist.tracks
+puts artist.playlists
 ```
 
 ## Copyright

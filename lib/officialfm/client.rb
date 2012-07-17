@@ -53,5 +53,15 @@ module OfficialFM
     def api_url
       "http://api.official.fm"
     end
+
+
+    private
+
+    # Enables chaining requests, e.g. client.project('abcd').tracks
+    def extend_response(response, mixin_module)
+      response.connection = @connection
+      response.extend(mixin_module)
+    end
+
   end
 end
