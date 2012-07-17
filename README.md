@@ -127,28 +127,7 @@ officialfm.playlists('Tamara Sky', { :limit => 2, :fields => :tracks })
 Consult the [API docs](http://dev.official.fm) for a description of valid optional parameters.
 
 
-## Note on Patches/Pull Requests
-
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but
-   bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
-
 ## Copyright
 
-Copyright (c) 2012 Dimiter Petrov
-
-Copyright (c) 2011 Amos Wenger
-
-This project is distributed under the New BSD License. See LICENSE for details.
-
-Based on [@pengwynn's Gowalla API wrapper](https://github.com/pengwynn/gowalla)
-                                                                                                                                                                     
-A huge load of thanks to pengwynn for releasing it open-source! It was wonderful
-to work from his extra-clean codebase.
-
+Copyright (c) 2012 official.fm
 
