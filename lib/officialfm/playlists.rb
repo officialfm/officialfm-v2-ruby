@@ -13,11 +13,5 @@ module OfficialFM
       response.body.playlist
     end
 
-    # Retrieve the tracks in a playlist
-    def playlist_tracks(id, options={})
-      response = connection.get "/playlists/#{id}/tracks", options
-      response.body.tracks
-    end
-    
   end
 end
