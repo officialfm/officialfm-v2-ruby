@@ -47,6 +47,31 @@ OfficialFM.configure do |c|
 end
 ```
 
+### Response format
+
+All methods return either a
+[Hashie:Mash](http://rdoc.info/github/intridea/hashie/Hashie/Mash) or an array
+of Hashie:Mash. That means you can access the response fields via method-like
+accessors. For example:
+
+```ruby
+search_results = officialfm.tracks('Wiz Khalifa')
+track = search_results[3].track
+puts "#{track.title} by #{track.artist}"
+```
+
+The objects returned by the `#playlist` and `#project` methods come with a
+method along with the usual properties, allowing you to chain API calls.
+
+```ruby
+# chain retrieving information about a playlist and retrieving the playlist's tracks
+officialfm.playlist('CbqY').tracks
+
+artist = officialfm.project('edB6')
+puts artist.tracks
+puts artist.playlists
+```
+
 ### Methods
 
 Search for a track:
@@ -75,7 +100,7 @@ officialfm.playlist('CbqY')
 
 Retrieve the tracks in a playlist
 
-```
+```ruby
 officialfm.playlist('CbqY').tracks
 ```
 
