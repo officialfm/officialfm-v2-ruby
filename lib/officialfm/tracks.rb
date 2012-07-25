@@ -4,7 +4,13 @@ module OfficialFM
     # Search for tracks
     def tracks(search_param, options={})
       response = connection.get '/tracks/search', options.merge(:q => search_param)
-      response.body.tracks
+
+      response.body.tracks.map! do |t|
+        # remove useless root
+        t.track
+      end
+
+      response.body
     end
 
     # Retrieve information about a specific track

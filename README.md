@@ -36,7 +36,7 @@ officialfm = OfficialFM::Client.new
 With an API key:
 
 ```ruby
-officialfm = OfficialFM::Client.new(:api_key => 'your_api_key')
+officialfm = OfficialFM::Client.new(api_key: 'your_api_key')
 ```
 
 You can also set a default configuration for all clients to use
@@ -60,18 +60,6 @@ track = search_results[3].track
 puts "#{track.title} by #{track.artist}"
 ```
 
-The objects returned by the `#playlist` and `#project` methods come with a
-method along with the usual properties, allowing you to chain API calls.
-
-```ruby
-# chain retrieving information about a playlist and retrieving the playlist's tracks
-officialfm.playlist('CbqY').tracks
-
-artist = officialfm.project('edB6')
-puts artist.tracks
-puts artist.playlists
-```
-
 ### Methods
 
 Search for a track:
@@ -80,13 +68,19 @@ Search for a track:
 officialfm.tracks('Nightcall')
 ```
 
+Search results being paged, you can request a specific page with the page parameter.
+
+```ruby 
+officialfm.tracks('Kids', page: 2)
+```
+
 Get info about a specific track:
 
 ```ruby
 officialfm.track('1nnQ')
 ```
 
-Search for a playlist:
+Search for a playlist (again you can pass an optional `page` parameter to get a specific results page):
 
 ```ruby
 officialfm.playlists('AWOLNATION')
@@ -98,13 +92,22 @@ Get info about a specific playlist:
 officialfm.playlist('CbqY')
 ```
 
-Retrieve the tracks in a playlist
+Retrieve the tracks in a playlist:
 
 ```ruby
-officialfm.playlist('CbqY').tracks
+playlists = officialfm.playlists('AWOLNATION')
+
+# The tracks for the 3 playlist in the search results
+tracks = playlists[2].tracks
 ```
 
-Note that the above makes two requests, therefore you may want to cache the response.
+Note that the `tracks` method of a playlist object makes an extra request. If
+you know the playlist ID in advance, you can retrieve the tracks in just one
+request.
+
+```ruby
+officialfm.playlist_tracks('CbqY')
+```
 
 Search for a project (a project can be an artist or a collaboration between several artists)
 
@@ -118,16 +121,26 @@ Similarly to playlists, you can get information about a specific project with
 officialfm.project('edB6')
 ```
 
-Get a project's tracks or playlists:
+Get a project's tracks or playlists when you know the project ID in advance.
 
 ```ruby
-artist = officialfm.project('edB6')
+tracks = officialfm.project_tracks('edB6')
+playlists = officialfm.project_playlists('edB6')
 puts artist.tracks
 puts artist.playlists
 ```
 
-Again, the `tracks` and `playlists` methods make an extra request each. Make
-sure to cache the results if you use them more than once.
+Of course you can get the playlists and tracks in a project even if you don't know its ID:
+
+```ruby
+projects = officialfm.projects('Mac Miller')
+
+puts projects[0].name # => 'Mac Miller'
+puts projects[2].name # => 'Mac Miller x Pharrell'
+
+tracks = projects[2].tracks
+
+```
 
 
 ## Copyright

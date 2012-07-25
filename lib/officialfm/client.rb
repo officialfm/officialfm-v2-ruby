@@ -54,12 +54,26 @@ module OfficialFM
       "http://api.official.fm"
     end
 
-
     private
 
-    # Enables chaining requests, e.g. client.project('abcd').tracks
+    # Returns the url for a ressource no matter if the full resource url is
+    # given or only the resource id.
+    #
+    # Both calls below should return 'http://api.official.fm/playlists/2BHH/tracks'
+    #
+    # resource_url('http://api.official.fm/playlists/2BHH', 'playlists', 'tracks')
+    # resource_url('2BHH', 'playlists', 'tracks')
+    #
+    def resource_url(id, parent, child)
+      if id.start_with? 'http'
+        return "#{id}/#{child}"
+      end
+
+      "/#{parent}/#{id}/#{child}"
+    end
+
     def extend_response(response, mixin_module)
-      response.connection = @connection
+      response.obj = self
       response.extend(mixin_module)
     end
 
