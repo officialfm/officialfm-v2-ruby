@@ -75,7 +75,11 @@ officialfm.playlist('CbqY')
 
 Retrieve the tracks in a playlist
 
+```
 officialfm.playlist('CbqY').tracks
+```
+
+Note that the above makes two requests, therefore you may want to cache the response.
 
 Search for a project (a project can be an artist or a collaboration between several artists)
 
@@ -96,6 +100,10 @@ artist = officialfm.project('edB6')
 puts artist.tracks
 puts artist.playlists
 ```
+
+Again, the `tracks` and `playlists` methods make an extra request each. Make
+sure to cache the results if you use them more than once.
+
 
 ## Copyright
 
