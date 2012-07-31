@@ -28,7 +28,7 @@ require 'officialfm'
 ```
 
 ### Instantiate a client
-    
+
 ```ruby
 officialfm = OfficialFM::Client.new
 ```
@@ -49,10 +49,9 @@ end
 
 ### Response format
 
-All methods return either a
-[Hashie:Mash](http://rdoc.info/github/intridea/hashie/Hashie/Mash) or an array
-of Hashie:Mash. That means you can access the response fields via method-like
-accessors. For example:
+All methods return a
+[Hashie:Mash](http://rdoc.info/github/intridea/hashie/Hashie/Mash).  That means
+you can access the response fields via method-like accessors. For example:
 
 ```ruby
 search_results = officialfm.tracks('Wiz Khalifa')
@@ -60,17 +59,65 @@ track = search_results[3].track
 puts "#{track.title} by #{track.artist}"
 ```
 
+## API response enhancements
+
+The API wraps responses in a root element, e.g.:
+
+```json
+{
+  "track": {
+    "title": "Some track"
+    ...
+  }
+}
+```
+
+The responses given by methods in the gem don't have a root and expose the
+resource's properites directly instead (e.g. `officialfm.track('xxxx').title`).
+
+Search results are also unwrapped. For example, the raw response of a track
+search looks like:
+
+```json
+{
+  "page": 1,
+  "total_entries": 2,
+  "total_pages": 1,
+  "tracks" : [
+    {
+      "track": {
+         // track properties
+      }
+    },
+    {
+      "track": {
+         // track properites
+      }
+    }
+  ]
+}
+```
+
+The gem removes the roots of the search result items, so you can access an item
+directly through array access.
+
+```ruby
+track = officialfm.tracks('foo').tracks[0]
+puts track.duration
+```
+
+
 ### Methods
 
 Search for a track:
 
-```ruby 
+```ruby
 officialfm.tracks('Nightcall')
 ```
 
 Search results being paged, you can request a specific page with the page parameter.
 
-```ruby 
+```ruby
 officialfm.tracks('Kids', page: 2)
 ```
 
@@ -80,7 +127,8 @@ Get info about a specific track:
 officialfm.track('1nnQ')
 ```
 
-Search for a playlist (again you can pass an optional `page` parameter to get a specific results page):
+Search for a playlist (again you can pass an optional `page` parameter to get a
+specific results page):
 
 ```ruby
 officialfm.playlists('AWOLNATION')
