@@ -78,13 +78,16 @@ class ClientTest < Test::Unit::TestCase
       end
     end
 
-    context "#extend_resource" do
+    context "#extend_response" do
       setup do
         @client = OfficialFM::Client.new
       end
 
       should "add module methods to a client response object" do
-        #TODO
+        response = Hashie::Mash.new
+        module CustomMethods; def foo; end; end
+
+        @client.send(:extend_response, response, CustomMethods).should respond_to? :foo
       end
 
     end
