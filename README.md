@@ -18,16 +18,15 @@ Coming soon.
 
 You can also access the API without an API key, but with a lower rate limit.
 
-## Usage
+## Client instantiation and configuration
 
-### Include the relevant files
+Include the relevant files
 
 ```ruby
-require 'rubygems'
 require 'officialfm'
 ```
 
-### Instantiate a client
+Instantiate a client
 
 ```ruby
 officialfm = OfficialFM::Client.new
@@ -47,7 +46,7 @@ OfficialFM.configure do |c|
 end
 ```
 
-### Response format
+## Response format
 
 All methods return a
 [Hashie:Mash](http://rdoc.info/github/intridea/hashie/Hashie/Mash).  That means
@@ -107,8 +106,9 @@ puts track.duration
 ```
 
 
-### Methods
+## Methods
 
+### Tracks
 Search for a track:
 
 ```ruby
@@ -126,6 +126,8 @@ Get info about a specific track:
 ```ruby
 officialfm.track('1nnQ')
 ```
+
+### Playlists
 
 Search for a playlist (again you can pass an optional `page` parameter to get a
 specific results page):
@@ -156,6 +158,8 @@ request.
 ```ruby
 officialfm.playlist_tracks('CbqY')
 ```
+
+### Projects
 
 Search for a project (a project can be an artist or a collaboration between several artists)
 
