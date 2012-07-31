@@ -36,15 +36,45 @@ class ClientTest < Test::Unit::TestCase
       end
 
       should "not change the base paths of complete URLs" do
-        @client.send(:resource_url, @base_url, 'something', 'child').start_with?(@base_url).should be(true)
+        options = {
+          parent: 'foo',
+          child:  'bar'
+        }
+
+        @client.send(:resource_url, @base_url, options).start_with?(@base_url).should be(true)
       end
 
       should "build resource url from a base url" do
-        @client.send(:resource_url, @base_url, 'something', 'child').should == 'http://example.com/child'
+        options = {
+          parent: 'foo',
+          child:  'bar'
+        }
+
+        @client.send(:resource_url, @base_url, options).should == 'http://example.com/bar'
       end
 
       should "build resource url from an id" do
-        @client.send(:resource_url, "42", "projects", "tracks").should == '/projects/42/tracks'
+        options = {
+          parent: 'foo',
+          child:  'bar'
+        }
+        @client.send(:resource_url, '42', options).should == '/foo/42/bar'
+      end
+
+      should "build url for resource without child" do
+        @client.send(:resource_url, '42', parent: 'foo').should == '/foo/42'
+      end
+
+      should "build url for resource without parent" do
+        @client.send(:resource_url, 'user', child: 'profile').should == '/user/profile'
+      end
+
+      should "build url for resource without parent or child" do
+        @client.send(:resource_url, 'greeting').should == '/greeting'
+      end
+
+      should "raise an error when resource id is nil" do
+        lambda {@client.send(:resource_url, nil)}.should raise_error
       end
     end
 

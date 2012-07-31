@@ -19,12 +19,14 @@ module OfficialFM
 
     # Retrieve information about a specific playlist
     def playlist(id, options={})
-      response = connection.get("/playlists/#{id}", options).body.playlist
+      url = resource_url(id, parent: 'playlists')
+
+      response = connection.get(url, options).body.playlist
       extend_response(response, PlaylistMethods)
     end
 
     def playlist_tracks(id, options={})
-      url = resource_url(id, 'playlists', 'tracks')
+      url = resource_url(id, { parent: 'playlists', child: 'tracks' })
 
       response = connection.get url, options
       response.body.tracks

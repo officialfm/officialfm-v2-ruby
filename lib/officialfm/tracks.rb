@@ -15,9 +15,11 @@ module OfficialFM
 
     # Retrieve information about a specific track
     def track(id, options={})
-      response = connection.get "/tracks/#{id}", options
+      url = resource_url(id, parent: 'tracks')
+
+      response = connection.get url, options
       response.body.track
     end
-    
+
   end
 end

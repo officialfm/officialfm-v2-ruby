@@ -6,7 +6,7 @@ module OfficialFM
     include Tracks
     include Playlists
     include Projects
-    
+
     attr_reader :api_key
 
     def initialize(options={})
@@ -23,7 +23,7 @@ module OfficialFM
         :url     => api_url,
         :headers => default_headers
       }.merge(options)
-    
+
       @connection ||= Faraday.new(config) do |builder|
         builder.adapter Faraday.default_adapter
 
@@ -34,7 +34,7 @@ module OfficialFM
       end
 
     end
-    
+
     # @private
     def default_headers
       headers = {
@@ -56,20 +56,33 @@ module OfficialFM
 
     private
 
-    # Returns the url for a ressource no matter if the full resource url is
-    # given or only the resource id.
+    # Returns the url for a resource.
     #
-    # Both calls below should return 'http://api.official.fm/playlists/2BHH/tracks'
+    #   - id: resource id or URL
+    #   - options: extra params. Supports 'parent' and 'child' options.
     #
-    # resource_url('http://api.official.fm/playlists/2BHH', 'playlists', 'tracks')
-    # resource_url('2BHH', 'playlists', 'tracks')
+    # resource_url('http://api.official.fm/playlists/2BHH', :child => :tracks)
+    # # => http://api.official.fm/playlists/2BHH/tracks
     #
-    def resource_url(id, parent, child)
+    # resource_url('2BHH', { :parent => 'playlists', :child => 'tracks'})
+    # # => /playlists/2BHH/tracks
+    #
+    # Note: if you supply a full resource URL, the parent option is ignored.
+    #
+    def resource_url(id, options={})
+      raise "Resource id cannot be nil" unless id
+
+      parent = options.fetch(:parent, nil)
+      child  = options.fetch(:child, nil)
+
       if id.start_with? 'http'
-        return "#{id}/#{child}"
+        return [id, child].join '/'
       end
 
-      "/#{parent}/#{id}/#{child}"
+      url = [parent, id, child].join('/').chomp('/')
+      url = "/#{url}" unless url.start_with? '/'
+
+      url
     end
 
     def extend_response(response, mixin_module)

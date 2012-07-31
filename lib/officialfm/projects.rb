@@ -19,19 +19,21 @@ module OfficialFM
 
     # Retrieve information about a specific project
     def project(id, options={})
-      response = connection.get("/projects/#{id}", options).body.project
+      url = resource_url(id, parent: 'projects')
+
+      response = connection.get(url, options).body.project
       extend_response(response, ProjectMethods)
     end
 
     def project_playlists(id, options={})
-      url = resource_url(id, 'projects', 'playlists')
+      url = resource_url(id, { parent: 'projects', child: 'playlists' })
 
       response = connection.get url, options
       response.body.playlists
     end
 
     def project_tracks(id, options={})
-      url = resource_url(id, 'projects', 'tracks')
+      url = resource_url(id, { parent: 'projects', child: 'tracks' })
 
       response = connection.get url, options
       response.body.tracks
