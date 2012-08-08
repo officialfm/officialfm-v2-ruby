@@ -29,14 +29,26 @@ module OfficialFM
       url = resource_url(id, { parent: 'projects', child: 'playlists' })
 
       response = connection.get url, options
-      response.body.playlists
+
+      playlists = response.body.playlists.map do |p|
+        # remove the unnecessary root
+        p.playlist
+      end
+
+      playlists
     end
 
     def project_tracks(id, options={})
       url = resource_url(id, { parent: 'projects', child: 'tracks' })
 
       response = connection.get url, options
-      response.body.tracks
+
+      tracks = response.body.tracks.map do |t|
+        # remove the unnecessary root
+        t.track
+      end
+
+      tracks
     end
 
     module ProjectMethods

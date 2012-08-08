@@ -29,7 +29,13 @@ module OfficialFM
       url = resource_url(id, { parent: 'playlists', child: 'tracks' })
 
       response = connection.get url, options
-      response.body.tracks
+
+      tracks = response.body.tracks.map do |t|
+        # remove the unnecessary root
+        t.track
+      end
+
+      tracks
     end
 
     module PlaylistMethods
