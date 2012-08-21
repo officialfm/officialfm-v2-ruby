@@ -1,6 +1,6 @@
 # official.fm
 
-Ruby wrapper for the [official.fm v2 API](http://dev.official.fm/).
+Ruby wrapper for the [official.fm v2 API](http://official.fm/developers).
 
 ## Installation
 
