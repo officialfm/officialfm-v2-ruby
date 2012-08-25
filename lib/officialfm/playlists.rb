@@ -41,7 +41,7 @@ module OfficialFM
     module PlaylistMethods
 
       def tracks
-        obj.playlist_tracks(self.src)
+        obj.playlist_tracks(self.url)
       end
     end
 

@@ -53,11 +53,11 @@ module OfficialFM
 
     module ProjectMethods
       def playlists
-        obj.project_playlists(self.src)
+        obj.project_playlists(self.url)
       end
 
       def tracks
-        obj.project_tracks(self.src)
+        obj.project_tracks(self.url)
       end
     end
 
