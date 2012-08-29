@@ -72,14 +72,17 @@ module OfficialFM
     def resource_url(id, options={})
       raise "Resource id cannot be nil" unless id
 
+      # Remove query parameters from resource URL
+      clean_id = Faraday.new(id).url_prefix.to_s
+
       parent = options.fetch(:parent, nil)
       child  = options.fetch(:child, nil)
 
-      if id.start_with? 'http'
-        return [id, child].join '/'
+      if clean_id.start_with? 'http'
+        return [clean_id, child].join '/'
       end
 
-      url = [parent, id, child].join('/').chomp('/')
+      url = [parent, clean_id, child].join('/').chomp('/')
       url = "/#{url}" unless url.start_with? '/'
 
       url
