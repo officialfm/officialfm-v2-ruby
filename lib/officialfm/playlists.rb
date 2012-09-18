@@ -3,7 +3,7 @@ module OfficialFM
 
     # Search for a playlist
     def playlists(search_param, options={})
-      response = connection.get '/playlists/search', options.merge(:q => search_param)
+      response = get '/playlists/search', options.merge(:q => search_param)
 
       response.body.playlists.map! do |p|
         # remove the unnecessary root
@@ -21,14 +21,14 @@ module OfficialFM
     def playlist(id, options={})
       url = resource_url(id, parent: 'playlists')
 
-      response = connection.get(url, options).body.playlist
+      response = get(url, options).body.playlist
       extend_response(response, PlaylistMethods)
     end
 
     def playlist_tracks(id, options={})
       url = resource_url(id, { parent: 'playlists', child: 'tracks' })
 
-      response = connection.get url, options
+      response = get url, options
 
       tracks = response.body.tracks.map do |t|
         # remove the unnecessary root

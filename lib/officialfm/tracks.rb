@@ -3,7 +3,7 @@ module OfficialFM
 
     # Search for tracks
     def tracks(search_param, options={})
-      response = connection.get '/tracks/search', options.merge(:q => search_param)
+      response = get '/tracks/search', options.merge(:q => search_param)
 
       response.body.tracks.map! do |t|
         # remove useless root
@@ -17,7 +17,7 @@ module OfficialFM
     def track(id, options={})
       url = resource_url(id, parent: 'tracks')
 
-      response = connection.get url, options
+      response = get url, options
       response.body.track
     end
 

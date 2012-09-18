@@ -121,10 +121,22 @@ Search results being paged, you can request a specific page with the page parame
 officialfm.tracks('Kids', page: 2)
 ```
 
+Filter results by track type (original, remix, cover, mashup, mixtape):
+
+```ruby
+officialfm.tracks('Mac Miller', types: ['original', 'remix'])
+```
+
 Get info about a specific track:
 
 ```ruby
 officialfm.track('1nnQ')
+```
+
+Get the artwork and streaming urls
+
+```ruby
+officialfm.track('1nnQ', fields: ['cover', 'streaming'])
 ```
 
 ### Playlists

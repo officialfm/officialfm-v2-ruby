@@ -93,5 +93,16 @@ module OfficialFM
       response.extend(mixin_module)
     end
 
+    def get(url, options={})
+      # Arrays should be transformed into comma separated lists
+      options.each do |k, v|
+        if v.is_a? Array
+          options[k] = v.join(',')
+        end
+      end
+
+      connection.get(url, options)
+    end
+
   end
 end
